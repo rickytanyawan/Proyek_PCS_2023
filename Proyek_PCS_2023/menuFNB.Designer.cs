@@ -68,6 +68,7 @@ namespace Proyek_PCS_2023
             this.button3.TabIndex = 3;
             this.button3.Text = "Menu Paket";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -77,6 +78,7 @@ namespace Proyek_PCS_2023
             this.button2.TabIndex = 4;
             this.button2.Text = "Menu Promo";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button4
             // 
@@ -86,6 +88,7 @@ namespace Proyek_PCS_2023
             this.button4.TabIndex = 5;
             this.button4.Text = "Menu (ALL)";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -95,6 +98,7 @@ namespace Proyek_PCS_2023
             this.button5.TabIndex = 6;
             this.button5.Text = "Avalaible Only";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -129,6 +133,7 @@ namespace Proyek_PCS_2023
             this.Controls.Add(this.dataGridView1);
             this.Name = "menuFNB";
             this.Text = "menuFNB";
+            this.Load += new System.EventHandler(this.menuFNB_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

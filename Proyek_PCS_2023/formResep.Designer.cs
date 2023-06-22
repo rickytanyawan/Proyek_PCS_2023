@@ -96,7 +96,7 @@ namespace Proyek_PCS_2023
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(663, 169);
+            this.button3.Location = new System.Drawing.Point(93, 415);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 18;
@@ -105,7 +105,7 @@ namespace Proyek_PCS_2023
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(582, 169);
+            this.button2.Location = new System.Drawing.Point(12, 415);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 17;
@@ -114,7 +114,7 @@ namespace Proyek_PCS_2023
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(501, 169);
+            this.button1.Location = new System.Drawing.Point(525, 169);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 16;
@@ -137,7 +137,7 @@ namespace Proyek_PCS_2023
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(478, 400);
+            this.dataGridView1.Size = new System.Drawing.Size(478, 371);
             this.dataGridView1.TabIndex = 14;
             // 
             // textBox1
@@ -173,7 +173,7 @@ namespace Proyek_PCS_2023
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(501, 415);
+            this.button5.Location = new System.Drawing.Point(636, 169);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 31;

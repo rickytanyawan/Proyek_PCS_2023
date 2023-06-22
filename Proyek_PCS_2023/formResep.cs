@@ -39,6 +39,8 @@ namespace Proyek_PCS_2023
             }
             bindDataSet();
             dataGridView1.Columns[0].Visible = false;
+
+            comboBox1.DataSource = DB.getList("SELECT NAMA_BAHAN FROM BAHAN", "NAMA_BAHAN");
         }
 
         private void bindDataSet()
