@@ -213,6 +213,7 @@ namespace Proyek_PCS_2023
             this.Controls.Add(this.dataGridView1);
             this.Name = "formResep";
             this.Text = "formResep";
+            this.Load += new System.EventHandler(this.formResep_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();

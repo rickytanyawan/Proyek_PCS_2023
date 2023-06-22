@@ -36,7 +36,8 @@ namespace Proyek_PCS_2023
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            menuFNB f = new menuFNB();
+            f.ShowDialog();
         }
     }
 }
