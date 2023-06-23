@@ -29,30 +29,12 @@ namespace Proyek_PCS_2023
 
         private void formResep_Load(object sender, EventArgs e)
         {
-            /*dataResep.Columns.Add("ID Resep");
-            dataResep.Columns.Add("Resep Makanan");
-            dataResep.Columns.Add("Bahan Makanan");
-            dataResep.Columns.Add("Qty Bahan");
-
-            DataTable resep = DB.query("SELECT R.ID_RESEP, F.NAMA_FNB, B.NAMA_BAHAN, R.STOK FROM RESEP R JOIN BAHAN B ON B.ID_BAHAN = R.ID_BAHAN JOIN FNB F ON F.ID_FNB = R.ID_FNB");
-            int jumlahData = resep.Rows.Count;
-            for (int i = 0; i < jumlahData; i++)
-            {
-                DataRow r = resep.Rows[i];
-                dataResep.Rows.Add(r.Field<int>("ID_RESEP"), r.Field<string>("NAMA_FNB"), r.Field<string>("NAMA_BAHAN"), r.Field<int>("STOK"));
-            }
-            
-            dataGridView1.Columns[0].Visible = false;*/
-
             bindDataSet();
             loadCombo();
         }
 
         private void bindDataSet()
         {
-            /*dataGridView1.DataSource = null;
-            dataGridView1.DataSource = dataResep;*/
-
             MySqlDataAdapter da;
             dataResep = new DataTable("resep");
             da = new MySqlDataAdapter("SELECT R.ID_RESEP as 'ID Resep', F.NAMA_FNB as 'Resep Makanan', B.NAMA_BAHAN as 'Bahan Makanan', R.STOK as 'Qty Bahan' FROM RESEP R JOIN BAHAN B ON B.ID_BAHAN = R.ID_BAHAN JOIN FNB F ON F.ID_FNB = R.ID_FNB", DB.conn);
