@@ -53,7 +53,7 @@ namespace Proyek_PCS_2023
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(9, 31);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
@@ -76,7 +76,7 @@ namespace Proyek_PCS_2023
             // buttonInsert
             // 
             this.buttonInsert.Location = new System.Drawing.Point(376, 137);
-            this.buttonInsert.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonInsert.Margin = new System.Windows.Forms.Padding(2);
             this.buttonInsert.Name = "buttonInsert";
             this.buttonInsert.Size = new System.Drawing.Size(56, 19);
             this.buttonInsert.TabIndex = 2;
@@ -87,7 +87,7 @@ namespace Proyek_PCS_2023
             // buttonUpdate
             // 
             this.buttonUpdate.Location = new System.Drawing.Point(436, 137);
-            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(56, 19);
             this.buttonUpdate.TabIndex = 3;
@@ -98,12 +98,13 @@ namespace Proyek_PCS_2023
             // buttonDelete
             // 
             this.buttonDelete.Location = new System.Drawing.Point(497, 137);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(56, 19);
             this.buttonDelete.TabIndex = 4;
             this.buttonDelete.Text = "Delete";
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // label2
             // 
@@ -148,15 +149,16 @@ namespace Proyek_PCS_2023
             // textBoxID
             // 
             this.textBoxID.Location = new System.Drawing.Point(477, 35);
-            this.textBoxID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxID.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxID.Name = "textBoxID";
+            this.textBoxID.ReadOnly = true;
             this.textBoxID.Size = new System.Drawing.Size(76, 20);
             this.textBoxID.TabIndex = 9;
             // 
             // textBoxNamaBahan
             // 
             this.textBoxNamaBahan.Location = new System.Drawing.Point(477, 58);
-            this.textBoxNamaBahan.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxNamaBahan.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxNamaBahan.Name = "textBoxNamaBahan";
             this.textBoxNamaBahan.Size = new System.Drawing.Size(76, 20);
             this.textBoxNamaBahan.TabIndex = 10;
@@ -164,7 +166,7 @@ namespace Proyek_PCS_2023
             // textBoxSatuan
             // 
             this.textBoxSatuan.Location = new System.Drawing.Point(477, 105);
-            this.textBoxSatuan.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBoxSatuan.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxSatuan.Name = "textBoxSatuan";
             this.textBoxSatuan.Size = new System.Drawing.Size(76, 20);
             this.textBoxSatuan.TabIndex = 12;
@@ -172,7 +174,7 @@ namespace Proyek_PCS_2023
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(496, 337);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(56, 19);
             this.button4.TabIndex = 13;
@@ -183,7 +185,12 @@ namespace Proyek_PCS_2023
             // numericUpDownStock
             // 
             this.numericUpDownStock.Location = new System.Drawing.Point(477, 82);
-            this.numericUpDownStock.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numericUpDownStock.Margin = new System.Windows.Forms.Padding(2);
+            this.numericUpDownStock.Maximum = new decimal(new int[] {
+            -1530494976,
+            232830,
+            0,
+            0});
             this.numericUpDownStock.Name = "numericUpDownStock";
             this.numericUpDownStock.Size = new System.Drawing.Size(75, 20);
             this.numericUpDownStock.TabIndex = 14;
@@ -207,7 +214,7 @@ namespace Proyek_PCS_2023
             this.Controls.Add(this.buttonInsert);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "formBahan";
             this.Text = "formBahan";
             this.Load += new System.EventHandler(this.formBahan_Load);
