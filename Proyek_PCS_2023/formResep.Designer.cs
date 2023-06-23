@@ -91,33 +91,6 @@ namespace Proyek_PCS_2023
             this.label3.TabIndex = 20;
             this.label3.Text = "Nama Makanan";
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(663, 169);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 18;
-            this.button3.Text = "Delete";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(582, 169);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 17;
-            this.button2.Text = "Update";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(501, 169);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -168,6 +141,11 @@ namespace Proyek_PCS_2023
             // numStock
             // 
             this.numStock.Location = new System.Drawing.Point(636, 130);
+            this.numStock.Maximum = new decimal(new int[] {
+            999999,
+            0,
+            0,
+            0});
             this.numStock.Name = "numStock";
             this.numStock.Size = new System.Drawing.Size(100, 22);
             this.numStock.TabIndex = 29;

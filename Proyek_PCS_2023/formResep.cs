@@ -15,6 +15,8 @@ namespace Proyek_PCS_2023
     {
         DataTable dataResep;
         DataTable dataBahan = new DataTable();
+        int id, id_fnb, bahan, stock;
+
         public formResep()
         {
             InitializeComponent();
@@ -71,8 +73,6 @@ namespace Proyek_PCS_2023
             comboBahan.ValueMember = dataBahan.Columns[0].ToString();
             comboBahan.SelectedIndex = -1;
         }
-
-        int id, id_fnb, bahan, stock;
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
