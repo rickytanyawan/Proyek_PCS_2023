@@ -39,5 +39,17 @@ namespace Proyek_PCS_2023
             menuFNB f = new menuFNB();
             f.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            formCustomer f = new formCustomer();
+            f.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            formKitchen f = new formKitchen();
+            f.ShowDialog();
+        }
     }
 }
