@@ -77,46 +77,58 @@ namespace Proyek_PCS_2023
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             string nama;
-            id = Convert.ToInt32(txtId.Text);
             nama = txtNama.Text.ToString();
-            bahan = Convert.ToInt32(comboBahan.SelectedIndex.ToString());
-            stock = Convert.ToInt32(numStock.Value.ToString());
+            string bahanText = comboBahan.Text;
 
-            string query = "SELECT fnb.id_fnb FROM fnb WHERE fnb.nama_fnb = @nama";
-            using (MySqlConnection connection = new MySqlConnection("server = localhost;" + "user id = root;" + "database = db_proyek_pcs_2023"))
+            // Get the ID_BAHAN based on the selected text in comboBahan
+            string query = "SELECT ID_BAHAN FROM bahan WHERE NAMA_BAHAN = @bahanText";
+            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
             {
                 connection.Open();
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@nama", nama);
-                    id_fnb= (int)command.ExecuteScalar();
+                    command.Parameters.AddWithValue("@bahanText", bahanText);
+                    object result = command.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        bahan = Convert.ToInt32(result);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid bahan selected");
+                        return;
+                    }
                 }
-                connection.Close();
             }
 
-            MySqlCommand commandUpdate = new MySqlCommand("UPDATE resep SET ID_FNB = @id_fnb, ID_BAHAN = @bahan, STOK = @stock where ID_RESEP = @id;", DB.conn);
+            stock = Convert.ToInt32(numStock.Value.ToString());
 
-            commandUpdate.Parameters.AddWithValue("@id", id);
-            commandUpdate.Parameters.AddWithValue("@id_fnb", id_fnb);
-            commandUpdate.Parameters.AddWithValue("@bahan", bahan);
-            commandUpdate.Parameters.AddWithValue("@stock", stock);
-
-            try
+            string updateQuery = "UPDATE resep SET ID_BAHAN = @bahan, STOK = @stock WHERE ID_RESEP = @id";
+            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
             {
-                DB.open();
-                commandUpdate.ExecuteNonQuery();
-                DB.close();
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@bahan", bahan);
+                    command.Parameters.AddWithValue("@stock", stock);
+                    command.Parameters.AddWithValue("@id", id);
+
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception exc)
+                    {
+                        MessageBox.Show(exc.Message.ToString());
+                    }
+                }
             }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message.ToString());
-            }
+
             bindDataSet();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            id = Convert.ToInt32(txtId.Text.ToString());
             DB.open();
             try
             {
@@ -132,37 +144,36 @@ namespace Proyek_PCS_2023
             bindDataSet();
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtNama.Text = "";
+            comboBahan.SelectedIndex = -1;
+            numStock.Value = 0;
+        }
+
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             idx = e.RowIndex;
-            txtId.Text = dataResep.Rows[idx][0].ToString();
+            id = Convert.ToInt32(dataResep.Rows[idx][0].ToString());
             txtNama.Text = dataResep.Rows[idx][1].ToString();
             comboBahan.Text = dataResep.Rows[idx][2].ToString();
             numStock.Value = Convert.ToInt32(dataResep.Rows[idx][3].ToString());
-            txtId.Enabled = false;
         }
 
         int idx = -1;
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            int id;
             string nama;
             int bahan;
             int stock;
             int id_fnb = 0;
 
-            if (!int.TryParse(txtId.Text, out id))
-            {
-                MessageBox.Show("Invalid ID");
-                return;
-            }
-
             nama = txtNama.Text;
 
             if (comboBahan.SelectedIndex == -1)
             {
-                MessageBox.Show("Tolong Memilih bahan");
+                MessageBox.Show("Please select a bahan");
                 return;
             }
             else
@@ -187,7 +198,7 @@ namespace Proyek_PCS_2023
                     }
                     else
                     {
-                        MessageBox.Show("Nama FNB Tidak Ada Pada fnb table");
+                        MessageBox.Show("Name does not exist in fnb table");
                         return;
                     }
                 }
@@ -205,45 +216,36 @@ namespace Proyek_PCS_2023
                     int count = Convert.ToInt32(command.ExecuteScalar());
                     if (count > 0)
                     {
-                        MessageBox.Show("Bahan Sudah Terdaftar Untuk FNB Ini");
+                        MessageBox.Show("Bahan already exists for the given ID_FNB");
                         return;
                     }
                 }
             }
 
-            // Check if id_resep already exists in resep table
-            query = "SELECT COUNT(*) FROM resep WHERE ID_RESEP = @id";
+            // Get the next available ID_RESEP using auto-increment
+            query = "SELECT MAX(ID_RESEP) FROM resep";
             using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
             {
                 connection.Open();
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", id);
-                    int count = Convert.ToInt32(command.ExecuteScalar());
-                    if (count > 0)
+                    object result = command.ExecuteScalar();
+                    int nextId = result != null && result != DBNull.Value ? Convert.ToInt32(result) + 1 : 1;
+
+                    // Insert into resep table
+                    query = "INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES (@id, @id_fnb, @bahan, @stock)";
+                    using (MySqlCommand insertCommand = new MySqlCommand(query, connection))
                     {
-                        MessageBox.Show("ID_RESEP Sudah Ada Di table");
-                        return;
+                        insertCommand.Parameters.AddWithValue("@id", nextId);
+                        insertCommand.Parameters.AddWithValue("@id_fnb", id_fnb);
+                        insertCommand.Parameters.AddWithValue("@bahan", bahan);
+                        insertCommand.Parameters.AddWithValue("@stock", stock);
+                        insertCommand.ExecuteNonQuery();
                     }
                 }
             }
 
-            // Insert into resep table
-            query = "INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES (@id, @id_fnb, @bahan, @stock)";
-            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
-            {
-                connection.Open();
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@id", id);
-                    command.Parameters.AddWithValue("@id_fnb", id_fnb);
-                    command.Parameters.AddWithValue("@bahan", bahan);
-                    command.Parameters.AddWithValue("@stock", stock);
-                    command.ExecuteNonQuery();
-                }
-            }
-
-            MessageBox.Show("Data Berhasil Dimasukkan");
+            MessageBox.Show("Data inserted successfully");
             bindDataSet();
         }
     }
