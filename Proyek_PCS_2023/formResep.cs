@@ -146,82 +146,105 @@ namespace Proyek_PCS_2023
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
+            int id;
             string nama;
-            id = Convert.ToInt32(txtId.Text);
-            nama = txtNama.Text.ToString();
-            bahan = Convert.ToInt32(comboBahan.SelectedIndex.ToString());
-            stock = Convert.ToInt32(numStock.Value.ToString());
+            int bahan;
+            int stock;
+            int id_fnb = 0;
 
-            string fnbQuery = "SELECT ID_FNB FROM fnb WHERE NAMA_FNB = @nama";
-            id_fnb = 0;
+            if (!int.TryParse(txtId.Text, out id))
+            {
+                MessageBox.Show("Invalid ID");
+                return;
+            }
 
+            nama = txtNama.Text;
+
+            if (comboBahan.SelectedIndex == -1)
+            {
+                MessageBox.Show("Tolong Memilih bahan");
+                return;
+            }
+            else
+            {
+                bahan = Convert.ToInt32(comboBahan.SelectedValue);
+            }
+
+            stock = (int)numStock.Value;
+
+            // Check if the name exists in fnb table
+            string query = "SELECT ID_FNB FROM fnb WHERE NAMA_FNB = @nama";
             using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
             {
-                using (MySqlCommand command = new MySqlCommand(fnbQuery, connection))
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@nama", nama);
-
-                    connection.Open();
-                    var result = command.ExecuteScalar();
-
-                    if (result != null)
+                    object result = command.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
                     {
                         id_fnb = Convert.ToInt32(result);
                     }
                     else
                     {
-                        MessageBox.Show("The name doesn't exist.");
+                        MessageBox.Show("Nama FNB Tidak Ada Pada fnb table");
                         return;
                     }
                 }
             }
 
-            // Check if the id_fnb already exists in resep table
-            string resepQuery = "SELECT COUNT(*) FROM resep WHERE ID_FNB = @id_fnb";
-
+            // Check if id_fnb and id_bahan already exist in resep table
+            query = "SELECT COUNT(*) FROM resep WHERE ID_FNB = @id_fnb AND ID_BAHAN = @bahan";
             using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
             {
-                using (MySqlCommand command = new MySqlCommand(resepQuery, connection))
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id_fnb", id_fnb);
-
-                    connection.Open();
+                    command.Parameters.AddWithValue("@bahan", bahan);
                     int count = Convert.ToInt32(command.ExecuteScalar());
-
                     if (count > 0)
                     {
-                        MessageBox.Show("Resep Sudah Ada Di Table");
+                        MessageBox.Show("Bahan Sudah Terdaftar Untuk FNB Ini");
+                        return;
+                    }
+                }
+            }
+
+            // Check if id_resep already exists in resep table
+            query = "SELECT COUNT(*) FROM resep WHERE ID_RESEP = @id";
+            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+            {
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        MessageBox.Show("ID_RESEP Sudah Ada Di table");
                         return;
                     }
                 }
             }
 
             // Insert into resep table
-            string insertQuery = "INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES (@id_resep, @id_fnb, @id_bahan, @stok)";
-
+            query = "INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES (@id, @id_fnb, @bahan, @stock)";
             using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
             {
-                using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
+                connection.Open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id_resep", id);
+                    command.Parameters.AddWithValue("@id", id);
                     command.Parameters.AddWithValue("@id_fnb", id_fnb);
-                    command.Parameters.AddWithValue("@id_bahan", bahan);
-                    command.Parameters.AddWithValue("@stok", stock);
-
-                    connection.Open();
-                    int rowsAffected = command.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Data inserted successfully.");
-                        bindDataSet();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to insert data.");
-                    }
+                    command.Parameters.AddWithValue("@bahan", bahan);
+                    command.Parameters.AddWithValue("@stock", stock);
+                    command.ExecuteNonQuery();
                 }
             }
+
+            MessageBox.Show("Data Berhasil Dimasukkan");
+            bindDataSet();
         }
     }
 }
