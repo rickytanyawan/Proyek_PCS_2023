@@ -23,7 +23,7 @@ namespace Proyek_PCS_2023
         {
             this.Close();
         }
-
+        
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -43,13 +43,14 @@ namespace Proyek_PCS_2023
 
         void updatedatacart()
         {
+            dataBahan = DB.query("SELECT * FROM BAHAN");
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = dataBahan;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string strtotalbahan = DB.getScalar("SELECT COUNT(*) FROM BAHAN");
+            string strtotalbahan = DB.getScalar("SELECT MAX(ID_BAHAN) FROM BAHAN");
 
             int inttotalbahan = Int32.Parse(strtotalbahan);
             inttotalbahan++;
@@ -79,8 +80,9 @@ namespace Proyek_PCS_2023
             }
 
             DB.close();
-
+            button1_Click_1(sender,e);
             MessageBox.Show("Berhasil Insert Bahan");
+            updatedatacart();
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -127,8 +129,9 @@ namespace Proyek_PCS_2023
             DB.close();
 
             updatedatacart();
-
+            button1_Click_1(sender,e);
             MessageBox.Show("Berhasil Update Barang");
+
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -152,6 +155,15 @@ namespace Proyek_PCS_2023
             updatedatacart();
 
             DB.close();
+            button1_Click_1(sender, e);
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            textBoxID.Text = "";
+            textBoxNamaBahan.Text = "";
+            numericUpDownStock.Value = 0;
+            textBoxSatuan.Text = "";
         }
     }
 }
