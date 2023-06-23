@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Proyek_PCS_2023
 {
@@ -20,30 +21,85 @@ namespace Proyek_PCS_2023
 
         private void formKitchen_Load(object sender, EventArgs e)
         {
-            dataKitchen.Columns.Add("Nomor Nota");
-            dataKitchen.Columns.Add("Makanan");
-            dataKitchen.Columns.Add("Qty");
-
-            DataTable detailMenu = DB.query("SELECT H.NOMOR_NOTA_HTRANS, D.NAMA_FNB, D.QTY FROM H_TRANS H JOIN D_TRANS D ON D.NOMOR_NOTA_DTRANS = H.NOMOR_NOTA_HTRANS");
-            int jumlahData = detailMenu.Rows.Count;
-            for (int i = 0; i < jumlahData; i++)
-            {
-                DataRow r = detailMenu.Rows[i];
-                dataKitchen.Rows.Add(r.Field<int>("ID_FNB"), r.Field<string>("NAMA_FNB"), r.Field<string>("JENIS_FNB"), r.Field<int>("HARGA"), r.Field<int>("PROMO"));
-            }
             bindDataSet();
         }
         private void bindDataSet()
         {
+            MySqlDataAdapter da;
+            dataKitchen = new DataTable("resep");
+            da = new MySqlDataAdapter("SELECT H.NOMOR_NOTA_HTRANS as 'Nomor Nota', D.NAMA_FNB as 'Makanan', D.QTY as 'QTY', UPPER(H.STATUS) as 'Status' FROM H_TRANS H JOIN D_TRANS D ON D.NOMOR_NOTA_DTRANS = H.NOMOR_NOTA_HTRANS", DB.conn);
+            da.Fill(dataKitchen);
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = dataKitchen;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int index = dataGridView1.CurrentCell.RowIndex;
-            if (index < 0) return;
-            dataGridView1.Rows[index].DefaultCellStyle.BackColor = Color.Yellow;
+            UpdateStatus("COOKING");
+        }
+
+        private void dataGridView1_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                if (row.Cells["Status"].Value != null)
+                {
+                    string status = row.Cells["Status"].Value.ToString();
+
+                    if (status == "PAID")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                    }
+                    else if (status == "COOKING")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Orange;
+                    }
+                    else if (status == "DONE")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Green;
+                    }
+                }
+            }
+        }
+
+        int id, idx;
+        string status;
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            UpdateStatus("DONE");
+        }
+
+        private void UpdateStatus(string newStatus)
+        {
+            if (dataGridView1.SelectedCells.Count > 0)
+            {
+                int rowIndex = dataGridView1.SelectedCells[0].RowIndex;
+                DataGridViewRow row = dataGridView1.Rows[rowIndex];
+
+                row.Cells["Status"].Value = newStatus;
+                UpdateRowBackgroundColor(row);
+            }
+        }
+
+        private void UpdateRowBackgroundColor(DataGridViewRow row)
+        {
+            string status = row.Cells["Status"].Value.ToString();
+
+            if (status == "PAID")
+            {
+                row.DefaultCellStyle.BackColor = Color.Yellow;
+            }
+            else if (status == "COOKING")
+            {
+                row.DefaultCellStyle.BackColor = Color.Orange;
+            }
+            else if (status == "DONE")
+            {
+                row.DefaultCellStyle.BackColor = Color.Green;
+            }
         }
     }
 }

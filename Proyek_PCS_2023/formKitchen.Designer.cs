@@ -45,6 +45,7 @@ namespace Proyek_PCS_2023
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(539, 397);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
             // 
             // label1
             // 
@@ -73,6 +74,7 @@ namespace Proyek_PCS_2023
             this.button2.TabIndex = 3;
             this.button2.Text = "Done";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // formKitchen
             // 
