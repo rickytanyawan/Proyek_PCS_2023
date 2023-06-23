@@ -152,12 +152,12 @@ namespace Proyek_PCS_2023
             {
                 int cal = money - subtotal;
                 textBox5.Text = "Rp. "+cal;
-                
 
-                string nomorNotaDTrans;
 
                 // Get the last value of nomor_nota_dtrans from the d_trans table
                 string query = "SELECT MAX(CAST(nomor_nota_dtrans AS UNSIGNED)) FROM d_trans";
+                string nomorNotaDTrans;
+                string nomorNotaHTrans;
                 using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
                 {
                     connection.Open();
@@ -174,11 +174,12 @@ namespace Proyek_PCS_2023
                             lastNomorNotaDTrans = 0;
                         }
                         nomorNotaDTrans = (lastNomorNotaDTrans + 1).ToString();
+                        nomorNotaHTrans = nomorNotaDTrans;
                     }
                 }
 
                 // Insert data from dataKeranjang DataTable to d_trans table
-                string insertQuery = "INSERT INTO d_trans (nomor_nota_dtrans, nama_fnb, qty, harga, subtotal) VALUES (@nomorNotaDTrans, @namaFNB, @qty, @harga, @subtotal)";
+                string insertDTransQuery = "INSERT INTO d_trans (nomor_nota_dtrans, nama_fnb, qty, harga, subtotal) VALUES (@nomorNotaDTrans, @namaFNB, @qty, @harga, @subtotal)";
                 using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
                 {
                     connection.Open();
@@ -188,7 +189,7 @@ namespace Proyek_PCS_2023
                         int qty = Convert.ToInt32(row[5]);
                         int harga = Convert.ToInt32(row[2]);
 
-                        using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
+                        using (MySqlCommand command = new MySqlCommand(insertDTransQuery, connection))
                         {
                             command.Parameters.AddWithValue("@nomorNotaDTrans", nomorNotaDTrans);
                             command.Parameters.AddWithValue("@namaFNB", namaFNB);
@@ -198,6 +199,25 @@ namespace Proyek_PCS_2023
 
                             command.ExecuteNonQuery();
                         }
+                    }
+                }
+
+                // Insert data into h_trans table
+                DateTime tanggalTrans = DateTime.Now;
+                string status = "PAID";
+                int total = subtotal;
+                string insertHTransQuery = "INSERT INTO h_trans (nomor_nota_htrans, tanggal_trans, total, status) VALUES (@nomorNotaHTrans, @tanggalTrans, @total, @status)";
+                using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+                {
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(insertHTransQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@nomorNotaHTrans", nomorNotaHTrans);
+                        command.Parameters.AddWithValue("@tanggalTrans", tanggalTrans);
+                        command.Parameters.AddWithValue("@total", total);
+                        command.Parameters.AddWithValue("@status", status);
+
+                        command.ExecuteNonQuery();
                     }
                 }
 
