@@ -95,7 +95,7 @@ namespace Proyek_PCS_2023
         private void button3_Click(object sender, EventArgs e)
         {
             dataMenu.Clear();
-            DataTable detailMenu = DB.query("SELECT ID_FNB, NAMA_FNB, JENIS_FNB, HARGA, PROMO FROM FNB WHERE G");
+            DataTable detailMenu = DB.query("SELECT ID_FNB, NAMA_FNB, JENIS_FNB, HARGA, PROMO FROM FNB WHERE PAKET");
             int jumlahData = detailMenu.Rows.Count;
             for (int i = 0; i < jumlahData; i++)
             {
