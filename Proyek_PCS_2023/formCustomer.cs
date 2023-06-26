@@ -158,7 +158,7 @@ namespace Proyek_PCS_2023
                 string query = "SELECT MAX(CAST(nomor_nota_dtrans AS UNSIGNED)) FROM d_trans";
                 string nomorNotaDTrans;
                 string nomorNotaHTrans;
-                using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+                using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
                 {
                     connection.Open();
                     using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -175,12 +175,13 @@ namespace Proyek_PCS_2023
                         }
                         nomorNotaDTrans = (lastNomorNotaDTrans + 1).ToString();
                         nomorNotaHTrans = nomorNotaDTrans;
+                        textBox6.Text = nomorNotaDTrans;
                     }
                 }
 
                 // Insert data from dataKeranjang DataTable to d_trans table
                 string insertDTransQuery = "INSERT INTO d_trans (nomor_nota_dtrans, nama_fnb, qty, harga, subtotal) VALUES (@nomorNotaDTrans, @namaFNB, @qty, @harga, @subtotal)";
-                using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+                using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
                 {
                     connection.Open();
                     foreach (DataRow row in dataKeranjang.Rows)
@@ -207,7 +208,7 @@ namespace Proyek_PCS_2023
                 string status = "PAID";
                 int total = subtotal;
                 string insertHTransQuery = "INSERT INTO h_trans (nomor_nota_htrans, tanggal_trans, total, status) VALUES (@nomorNotaHTrans, @tanggalTrans, @total, @status)";
-                using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+                using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
                 {
                     connection.Open();
                     using (MySqlCommand command = new MySqlCommand(insertHTransQuery, connection))
@@ -227,6 +228,11 @@ namespace Proyek_PCS_2023
             {
                 MessageBox.Show("Uang tidak cukup");
             }
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

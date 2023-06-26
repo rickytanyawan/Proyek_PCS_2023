@@ -122,7 +122,7 @@ namespace Proyek_PCS_2023
         {
             string updateQuery = "UPDATE h_trans SET STATUS = @status WHERE NOMOR_NOTA_HTRANS = @nomorNotaHTrans";
 
-            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+            using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
             {
                 connection.Open();
                 using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
@@ -169,7 +169,7 @@ namespace Proyek_PCS_2023
             int id_fnb = -1;
             string query = "SELECT id_fnb FROM fnb WHERE nama_fnb = @nama_fnb";
 
-            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+            using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
             {
                 connection.Open();
                 using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -192,7 +192,7 @@ namespace Proyek_PCS_2023
             List<int> id_bahanList = new List<int>();
             string query = "SELECT id_bahan FROM resep WHERE id_fnb = @id_fnb";
 
-            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+            using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
             {
                 connection.Open();
                 using (MySqlCommand command = new MySqlCommand(query, connection))
@@ -216,7 +216,7 @@ namespace Proyek_PCS_2023
         {
             string updateQuery = "UPDATE bahan SET stok = stok - 1 WHERE id_bahan = @id_bahan";
 
-            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
+            using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
             {
                 connection.Open();
                 using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
