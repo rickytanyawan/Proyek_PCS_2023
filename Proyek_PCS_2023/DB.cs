@@ -36,7 +36,14 @@ namespace Proyek_PCS_2023
             adapter.Fill(dt);
             return dt;
         }
-
+        public static void updateDB(string query)
+        {
+            DB.open();
+            MySqlTransaction transaction = DB.conn.BeginTransaction();
+            MySqlCommand cmd = new MySqlCommand(query, DB.conn, transaction);
+            cmd.ExecuteNonQuery();
+            transaction.Commit();
+        }
         public static string getScalar(string query)
         {
 

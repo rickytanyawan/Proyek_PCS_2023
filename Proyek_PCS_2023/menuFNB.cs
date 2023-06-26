@@ -131,6 +131,10 @@ namespace Proyek_PCS_2023
                 }
             }
 
+            promo = Int32.Parse(textBox1.Text);
+            DB.updateDB($"UPDATE FNB SET PROMO = {promo} WHERE ID_FNB = {id}");
+            
+
             dataMenu.Clear();
             DataTable detailMenu = DB.query("SELECT ID_FNB, NAMA_FNB, JENIS_FNB, HARGA, PROMO, PAKET FROM FNB");
             int jumlahData = detailMenu.Rows.Count;
@@ -192,6 +196,9 @@ namespace Proyek_PCS_2023
                     }
                 }
             }
+
+            paket = Int32.Parse(textBox2.Text);
+            DB.updateDB($"UPDATE fnb SET PAKET = {paket} WHERE ID_FNB = {id}");
 
             dataMenu.Clear();
             DataTable detailMenu = DB.query("SELECT ID_FNB, NAMA_FNB, JENIS_FNB, HARGA, PROMO, PAKET FROM FNB");
