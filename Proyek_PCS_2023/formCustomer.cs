@@ -234,5 +234,22 @@ namespace Proyek_PCS_2023
         {
 
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string makanan = comboBox1.SelectedItem.ToString();
+            DataTable harga = DB.query($"SELECT HARGA, PROMO FROM FNB WHERE NAMA_FNB = '{makanan}'");
+            DataRow r = harga.Rows[0];
+            label9.Text = "Rp. "+r.Field<int>("HARGA");
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string makanan = comboBox2.SelectedItem.ToString();
+            DataTable harga = DB.query($"SELECT HARGA, PROMO FROM FNB WHERE NAMA_FNB = '{makanan}'");
+            DataRow r = harga.Rows[0];
+            label8.Text = "Rp. " + r.Field<int>("HARGA");
+
+        }
     }
 }

@@ -246,5 +246,11 @@ namespace Proyek_PCS_2023
         {
             index = e.RowIndex;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            formBahan b = new formBahan();
+            b.ShowDialog();
+        }
     }
 }
