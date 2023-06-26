@@ -183,7 +183,7 @@ namespace Proyek_PCS_2023
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(713, 417);
+            this.label6.Location = new System.Drawing.Point(693, 417);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(40, 17);
             this.label6.TabIndex = 13;
@@ -192,7 +192,7 @@ namespace Proyek_PCS_2023
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(587, 414);
+            this.textBox1.Location = new System.Drawing.Point(587, 346);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 22);
@@ -201,7 +201,7 @@ namespace Proyek_PCS_2023
             // textBox2
             // 
             this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(587, 377);
+            this.textBox2.Location = new System.Drawing.Point(587, 380);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 22);
@@ -210,7 +210,7 @@ namespace Proyek_PCS_2023
             // textBox3
             // 
             this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(587, 347);
+            this.textBox3.Location = new System.Drawing.Point(587, 414);
             this.textBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 22);

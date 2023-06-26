@@ -51,7 +51,7 @@ namespace Proyek_PCS_2023
                 harga = harga * jumlah;
                 total = total + harga;
                 harga = Int32.Parse(r.Field<string>("PROMO"));
-                potongan = potongan + harga;
+                potongan = potongan + harga*jumlah;
             }
             textBox1.Text = "Rp. "+total;
             textBox2.Text = "Rp. " + potongan;
@@ -180,7 +180,7 @@ namespace Proyek_PCS_2023
                 }
 
                 // Insert data from dataKeranjang DataTable to d_trans table
-                string insertDTransQuery = "INSERT INTO d_trans (nomor_nota_dtrans, nama_fnb, qty, harga, subtotal) VALUES (@nomorNotaDTrans, @namaFNB, @qty, @harga, @subtotal)";
+                string insertDTransQuery = "INSERT INTO d_trans (nomor_nota_dtrans, nama_fnb, qty, harga, subtotal, harga_bayar, kembalian) VALUES (@nomorNotaDTrans, @namaFNB, @qty, @harga, @subtotal, @harga_bayar, @kembalian)";
                 using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
                 {
                     connection.Open();
@@ -197,6 +197,8 @@ namespace Proyek_PCS_2023
                             command.Parameters.AddWithValue("@qty", qty);
                             command.Parameters.AddWithValue("@harga", harga);
                             command.Parameters.AddWithValue("@subtotal", subtotal);
+                            command.Parameters.AddWithValue("@harga_bayar", textBox4.Text);
+                            command.Parameters.AddWithValue("@kembalian", textBox5.Text);
 
                             command.ExecuteNonQuery();
                         }
