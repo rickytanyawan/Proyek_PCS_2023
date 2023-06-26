@@ -110,26 +110,9 @@ namespace Proyek_PCS_2023
 
         private void button6_Click(object sender, EventArgs e)
         {
-            int promo = Convert.ToInt32(textBox1.Text);
-            string updateQuery = "UPDATE fnb SET PROMO = @promo WHERE ID_FNB = @id";
-            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
-            {
-                connection.Open();
-                using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@promo", promo);
-                    command.Parameters.AddWithValue("@id", id);
-
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageBox.Show(exc.Message.ToString());
-                    }
-                }
-            }
+            int promo = Int32.Parse(textBox1.Text);
+            DB.updateDB($"UPDATE FNB SET PROMO = {promo} WHERE ID_FNB = {id}");
+            
 
             dataMenu.Clear();
             DataTable detailMenu = DB.query("SELECT ID_FNB, NAMA_FNB, JENIS_FNB, HARGA, PROMO, PAKET FROM FNB");
@@ -172,26 +155,8 @@ namespace Proyek_PCS_2023
 
         private void button7_Click(object sender, EventArgs e)
         {
-            int paket = Convert.ToInt32(textBox2.Text);
-            string updateQuery = "UPDATE fnb SET PAKET = @paket WHERE ID_FNB = @id";
-            using (MySqlConnection connection = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023"))
-            {
-                connection.Open();
-                using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@paket", paket);
-                    command.Parameters.AddWithValue("@id", id);
-
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageBox.Show(exc.Message.ToString());
-                    }
-                }
-            }
+            int paket = Int32.Parse(textBox2.Text);
+            DB.updateDB($"UPDATE fnb SET PAKET = {paket} WHERE ID_FNB = {id}");
 
             dataMenu.Clear();
             DataTable detailMenu = DB.query("SELECT ID_FNB, NAMA_FNB, JENIS_FNB, HARGA, PROMO, PAKET FROM FNB");
