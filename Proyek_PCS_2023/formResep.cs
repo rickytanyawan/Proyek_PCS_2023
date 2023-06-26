@@ -192,26 +192,19 @@ namespace Proyek_PCS_2023
             }
             DB.close();
 
+            int nextId;
+
             // Get the next available ID_RESEP using auto-increment
             query = "SELECT MAX(ID_RESEP) FROM resep";
             DB.open();
             using (MySqlCommand command = new MySqlCommand(query, connection))
             {
                 object result = command.ExecuteScalar();
-                int nextId = result != null && result != DBNull.Value ? Convert.ToInt32(result) + 1 : 1;
-
-                // Insert into resep table
-                query = "INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES (@id, @id_fnb, @bahan, @stock)";
-                using (MySqlCommand insertCommand = new MySqlCommand(query, connection))
-                {
-                    insertCommand.Parameters.AddWithValue("@id", nextId);
-                    insertCommand.Parameters.AddWithValue("@id_fnb", id_fnb);
-                    insertCommand.Parameters.AddWithValue("@bahan", bahan);
-                    insertCommand.Parameters.AddWithValue("@stock", stock);
-                    insertCommand.ExecuteNonQuery();
-                }
+                nextId = result != null && result != DBNull.Value ? Convert.ToInt32(result) + 1 : 1;
             }
             DB.close();
+
+            DB.updateDB($"INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES ({nextId}, {id_fnb}, {bahan}, {stock})");
 
             MessageBox.Show("Data inserted successfully");
             bindDataSet();
