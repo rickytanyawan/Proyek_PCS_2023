@@ -111,25 +111,6 @@ namespace Proyek_PCS_2023
         private void button6_Click(object sender, EventArgs e)
         {
             int promo = Convert.ToInt32(textBox1.Text);
-            string updateQuery = "UPDATE fnb SET PROMO = @promo WHERE ID_FNB = @id";
-            using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
-            {
-                connection.Open();
-                using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@promo", promo);
-                    command.Parameters.AddWithValue("@id", id);
-
-                    try
-                    {
-                        command.ExecuteNonQuery();
-                    }
-                    catch (Exception exc)
-                    {
-                        MessageBox.Show(exc.Message.ToString());
-                    }
-                }
-            }
 
             promo = Int32.Parse(textBox1.Text);
             DB.updateDB($"UPDATE FNB SET PROMO = {promo} WHERE ID_FNB = {id}");
