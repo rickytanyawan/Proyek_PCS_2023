@@ -18,6 +18,7 @@ namespace Proyek_PCS_2023
         {
             InitializeComponent();
         }
+        int index = 0;
 
         private void formKitchen_Load(object sender, EventArgs e)
         {
@@ -39,6 +40,8 @@ namespace Proyek_PCS_2023
             {
                 int rowIndex = dataGridView1.SelectedCells[0].RowIndex;
                 DataGridViewRow row = dataGridView1.Rows[rowIndex];
+                string tempnonota = row.Cells["Nomor Nota"].Value.ToString();
+
 
                 string makanan = row.Cells["Makanan"].Value.ToString();
                 int id_fnb = GetFnbId(makanan);
@@ -54,9 +57,21 @@ namespace Proyek_PCS_2023
                             ReduceBahanStock(id_bahan);
                         }
 
-                        // Update the status to "COOKING"
-                        row.Cells["Status"].Value = "COOKING";
-                        UpdateRowBackgroundColor(row);
+                        for (int i = 0; i < dataGridView1.RowCount; i++)
+                        {
+                            index++;
+                            row = dataGridView1.Rows[index];
+
+                            if (row.Cells["Nomor Nota"].Value.ToString() == tempnonota)
+                            {
+                                // Update the status to "COOKING"
+                                row.Cells["Status"].Value = "COOKING";
+                                UpdateRowBackgroundColor(row);
+                            }
+                            
+                        }
+
+                        
 
                         // Update the status in the h_trans table
                         string nomorNotaHTrans = row.Cells["Nomor Nota"].Value.ToString();
