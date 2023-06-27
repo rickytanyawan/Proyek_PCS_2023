@@ -145,6 +145,8 @@ namespace Proyek_PCS_2023
             bindDataSet();
         }
 
+        private MySqlConnection connection = DB.conn;
+
         private void button4_Click(object sender, EventArgs e)
         {
             int money = Int32.Parse(textBox4.Text);
@@ -158,71 +160,65 @@ namespace Proyek_PCS_2023
                 string query = "SELECT MAX(CAST(nomor_nota_dtrans AS UNSIGNED)) FROM d_trans";
                 string nomorNotaDTrans;
                 string nomorNotaHTrans;
-                using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
+                DB.open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    connection.Open();
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    object result = command.ExecuteScalar();
+                    int lastNomorNotaDTrans;
+                    if (result != null && result != DBNull.Value)
                     {
-                        object result = command.ExecuteScalar();
-                        int lastNomorNotaDTrans;
-                        if (result != null && result != DBNull.Value)
-                        {
-                            lastNomorNotaDTrans = Convert.ToInt32(result);
-                        }
-                        else
-                        {
-                            lastNomorNotaDTrans = 0;
-                        }
-                        nomorNotaDTrans = (lastNomorNotaDTrans + 1).ToString();
-                        nomorNotaHTrans = nomorNotaDTrans;
-                        textBox6.Text = nomorNotaDTrans;
+                        lastNomorNotaDTrans = Convert.ToInt32(result);
                     }
+                    else
+                    {
+                        lastNomorNotaDTrans = 0;
+                    }
+                    nomorNotaDTrans = (lastNomorNotaDTrans + 1).ToString();
+                    nomorNotaHTrans = nomorNotaDTrans;
+                    textBox6.Text = nomorNotaDTrans;
                 }
+                DB.close();
 
                 // Insert data from dataKeranjang DataTable to d_trans table
                 string insertDTransQuery = "INSERT INTO d_trans (nomor_nota_dtrans, nama_fnb, qty, harga, subtotal, harga_bayar, kembalian) VALUES (@nomorNotaDTrans, @namaFNB, @qty, @harga, @subtotal, @harga_bayar, @kembalian)";
-                using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
+                DB.open();
+                foreach (DataRow row in dataKeranjang.Rows)
                 {
-                    connection.Open();
-                    foreach (DataRow row in dataKeranjang.Rows)
+                    string namaFNB = row[0].ToString();
+                    int qty = Convert.ToInt32(row[4]);
+                    int harga = Convert.ToInt32(row[2]);
+
+                    using (MySqlCommand command = new MySqlCommand(insertDTransQuery, connection))
                     {
-                        string namaFNB = row[0].ToString();
-                        int qty = Convert.ToInt32(row[5]);
-                        int harga = Convert.ToInt32(row[2]);
+                        command.Parameters.AddWithValue("@nomorNotaDTrans", nomorNotaDTrans);
+                        command.Parameters.AddWithValue("@namaFNB", namaFNB);
+                        command.Parameters.AddWithValue("@qty", qty);
+                        command.Parameters.AddWithValue("@harga", harga);
+                        command.Parameters.AddWithValue("@subtotal", subtotal);
+                        command.Parameters.AddWithValue("@harga_bayar", money);
+                        command.Parameters.AddWithValue("@kembalian", cal);
 
-                        using (MySqlCommand command = new MySqlCommand(insertDTransQuery, connection))
-                        {
-                            command.Parameters.AddWithValue("@nomorNotaDTrans", nomorNotaDTrans);
-                            command.Parameters.AddWithValue("@namaFNB", namaFNB);
-                            command.Parameters.AddWithValue("@qty", qty);
-                            command.Parameters.AddWithValue("@harga", harga);
-                            command.Parameters.AddWithValue("@subtotal", subtotal);
-                            command.Parameters.AddWithValue("@harga_bayar", textBox4.Text);
-                            command.Parameters.AddWithValue("@kembalian", textBox5.Text);
-
-                            command.ExecuteNonQuery();
-                        }
+                        command.ExecuteNonQuery();
                     }
                 }
+                DB.close();
 
                 // Insert data into h_trans table
                 DateTime tanggalTrans = DateTime.Now;
                 string status = "PAID";
                 int total = subtotal;
                 string insertHTransQuery = "INSERT INTO h_trans (nomor_nota_htrans, tanggal_trans, total, status) VALUES (@nomorNotaHTrans, @tanggalTrans, @total, @status)";
-                using (MySqlConnection connection = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023"))
+                DB.open();
+                using (MySqlCommand command = new MySqlCommand(insertHTransQuery, connection))
                 {
-                    connection.Open();
-                    using (MySqlCommand command = new MySqlCommand(insertHTransQuery, connection))
-                    {
-                        command.Parameters.AddWithValue("@nomorNotaHTrans", nomorNotaHTrans);
-                        command.Parameters.AddWithValue("@tanggalTrans", tanggalTrans);
-                        command.Parameters.AddWithValue("@total", total);
-                        command.Parameters.AddWithValue("@status", status);
+                    command.Parameters.AddWithValue("@nomorNotaHTrans", nomorNotaHTrans);
+                    command.Parameters.AddWithValue("@tanggalTrans", tanggalTrans);
+                    command.Parameters.AddWithValue("@total", total);
+                    command.Parameters.AddWithValue("@status", status);
 
-                        command.ExecuteNonQuery();
-                    }
+                    command.ExecuteNonQuery();
                 }
+                DB.close();
 
                 button5_Click(sender, e);
             }
