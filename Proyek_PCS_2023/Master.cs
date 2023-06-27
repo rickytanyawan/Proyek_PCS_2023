@@ -36,7 +36,8 @@ namespace Proyek_PCS_2023
 
         private void button3_Click(object sender, EventArgs e)
         {
-            menuFNB f = new menuFNB();
+            int code = 0;
+            menuFNB f = new menuFNB(code);
             f.ShowDialog();
         }
 
@@ -54,8 +55,8 @@ namespace Proyek_PCS_2023
 
         private void button6_Click(object sender, EventArgs e)
         {
-            FormHistory f = new FormHistory();
-            f.ShowDialog();
+            /*FormHistory f = new FormHistory();
+            f.ShowDialog();*/
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Proyek_PCS_2023
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new menuFNB());
+            Application.Run(new Master());
         }
     }
 }

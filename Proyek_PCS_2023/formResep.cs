@@ -218,7 +218,7 @@ namespace Proyek_PCS_2023
             if (id_fnb == -1)
             {
                 MessageBox.Show("Makanan Atau Minuman Belum Terdaftar Tolong Daftarkan Terlebih Dahulu");
-                formFNB fnb = new formFNB();
+                menuFNB fnb = new menuFNB(id_fnb);
                 fnb.Show();
             }
             else

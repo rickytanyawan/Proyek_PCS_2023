@@ -14,10 +14,12 @@ namespace Proyek_PCS_2023
     public partial class menuFNB : Form
     {
         DataTable dataMenu = new DataTable();
+        int code;
 
-        public menuFNB()
+        public menuFNB(int param)
         {
             InitializeComponent();
+            code = param;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -42,12 +44,40 @@ namespace Proyek_PCS_2023
             }
             bindDataSet();
             dataGridView1.Columns[0].Visible = false;
+
+            if(code == -1)
+            {
+                label1.Visible = true;
+                textBox1.Visible = true;
+                label1.Enabled = true;
+                textBox1.Enabled = true;
+                label2.Visible = true;
+                textBox2.Visible = true;
+                label2.Enabled = true;
+                textBox2.Enabled = true;
+                label3.Visible = true;
+                textBox3.Visible = true;
+                label3.Enabled = true;
+                textBox3.Enabled = true;
+                label4.Visible = true;
+                comboBox1.Visible = true;
+                label4.Enabled = true;
+                comboBox1.Enabled = true;
+                label5.Visible = true;
+                numericUpDown1.Visible = true;
+                label5.Enabled = true;
+                numericUpDown1.Enabled = true;
+                button8.Visible = true;
+                button8.Enabled = true;
+            }
         }
 
         private void bindDataSet()
         {
+            dataMenu = DB.query("SELECT ID_FNB, NAMA_FNB, JENIS_FNB, HARGA, PROMO, PAKET FROM FNB");
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = dataMenu;
+            dataGridView1.Columns[0].Visible = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -134,6 +164,7 @@ namespace Proyek_PCS_2023
             textBox2.Visible = false;
             label2.Enabled = false;
             textBox2.Enabled = false;
+            
         }
 
         int id;
@@ -149,6 +180,18 @@ namespace Proyek_PCS_2023
             textBox2.Visible = true;
             label2.Enabled = true;
             textBox2.Enabled = true;
+            label3.Visible = true;
+            textBox3.Visible = true;
+            label3.Enabled = true;
+            textBox3.Enabled = true;
+            label4.Visible = true;
+            comboBox1.Visible = true;
+            label4.Enabled = true;
+            comboBox1.Enabled = true;
+            label5.Visible = true;
+            numericUpDown1.Visible = true;
+            label5.Enabled = true;
+            numericUpDown1.Enabled = true;
 
             id = Convert.ToInt32(dataMenu.Rows[idx][0].ToString());
             textBox1.Text = dataMenu.Rows[idx][4].ToString();
@@ -199,6 +242,46 @@ namespace Proyek_PCS_2023
             textBox2.Visible = false;
             label2.Enabled = false;
             textBox2.Enabled = false;
+        }
+
+        private MySqlConnection connection = DB.conn;
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            string nama = textBox3.Text.ToUpper() ;
+            string jenis = comboBox1.SelectedItem.ToString().ToUpper();
+            int harga = Convert.ToInt32(numericUpDown1.Value.ToString());
+            int promo = Convert.ToInt32(textBox1.Text.ToString());
+            int paket = Convert.ToInt32(textBox2.Text.ToString());
+
+            int newID = -1;
+
+            string query = "SELECT MAX(ID_FNB) FROM FNB";
+            DB.open();
+            using (MySqlCommand command = new MySqlCommand(query, connection))
+            {
+                object result = command.ExecuteScalar();
+                newID = result != null && result != DBNull.Value ? Convert.ToInt32(result) + 1 : 1;
+            }
+            DB.close();
+
+            int id_resep = newID;
+
+            int status = 1;
+
+            MessageBox.Show(newID.ToString());
+            MessageBox.Show(nama);
+            MessageBox.Show(jenis);
+            MessageBox.Show(id_resep.ToString());
+            MessageBox.Show(harga.ToString());
+            MessageBox.Show(promo.ToString());
+            MessageBox.Show(paket.ToString());
+            MessageBox.Show(status.ToString());
+
+            DB.updateDB($"INSERT INTO fnb (ID_FNB, NAMA_FNB, JENIS_FNB, ID_RESEP, HARGA, PROMO, PAKET, AVAILABLE) VALUES ({newID}, '{nama}', '{jenis}', {id_resep}, {harga}, {promo}, {paket}, {status})");
+
+            MessageBox.Show("Data inserted successfully");
+            bindDataSet();
         }
     }
 }
