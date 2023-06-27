@@ -10,7 +10,7 @@ namespace Proyek_PCS_2023
 {
     class DB
     {
-        public static MySqlConnection conn = new MySqlConnection("server=172.29.233.212;user id=root;database=db_proyek_pcs_2023");
+        public static MySqlConnection conn = new MySqlConnection("server=localhost;user id=root;database=db_proyek_pcs_2023");
         public DB()
         {
 

@@ -48,7 +48,7 @@ namespace Proyek_PCS_2023
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(437, 336);
+            this.button4.Location = new System.Drawing.Point(600, 336);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(131, 23);
             this.button4.TabIndex = 27;
@@ -60,8 +60,9 @@ namespace Proyek_PCS_2023
             // 
             this.txtNama.Location = new System.Drawing.Point(128, 250);
             this.txtNama.Name = "txtNama";
-            this.txtNama.Size = new System.Drawing.Size(100, 22);
+            this.txtNama.Size = new System.Drawing.Size(281, 22);
             this.txtNama.TabIndex = 24;
+            this.txtNama.TextChanged += new System.EventHandler(this.txtNama_TextChanged);
             // 
             // label5
             // 
@@ -71,6 +72,7 @@ namespace Proyek_PCS_2023
             this.label5.Size = new System.Drawing.Size(98, 17);
             this.label5.TabIndex = 22;
             this.label5.Text = "Jumlah Bahan";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label4
             // 
@@ -80,6 +82,7 @@ namespace Proyek_PCS_2023
             this.label4.Size = new System.Drawing.Size(49, 17);
             this.label4.TabIndex = 21;
             this.label4.Text = "Bahan";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -89,6 +92,7 @@ namespace Proyek_PCS_2023
             this.label3.Size = new System.Drawing.Size(107, 17);
             this.label3.TabIndex = 20;
             this.label3.Text = "Nama Makanan";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label1
             // 
@@ -99,19 +103,22 @@ namespace Proyek_PCS_2023
             this.label1.Size = new System.Drawing.Size(73, 25);
             this.label1.TabIndex = 15;
             this.label1.Text = "Resep";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 38);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(556, 197);
+            this.dataGridView1.Size = new System.Drawing.Size(719, 197);
             this.dataGridView1.TabIndex = 14;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // comboBahan
@@ -119,8 +126,9 @@ namespace Proyek_PCS_2023
             this.comboBahan.FormattingEnabled = true;
             this.comboBahan.Location = new System.Drawing.Point(128, 278);
             this.comboBahan.Name = "comboBahan";
-            this.comboBahan.Size = new System.Drawing.Size(100, 24);
+            this.comboBahan.Size = new System.Drawing.Size(281, 24);
             this.comboBahan.TabIndex = 28;
+            this.comboBahan.SelectedIndexChanged += new System.EventHandler(this.comboBahan_SelectedIndexChanged);
             // 
             // numStock
             // 
@@ -131,12 +139,13 @@ namespace Proyek_PCS_2023
             0,
             0});
             this.numStock.Name = "numStock";
-            this.numStock.Size = new System.Drawing.Size(100, 22);
+            this.numStock.Size = new System.Drawing.Size(281, 22);
             this.numStock.TabIndex = 29;
+            this.numStock.ValueChanged += new System.EventHandler(this.numStock_ValueChanged);
             // 
             // btnInsert
             // 
-            this.btnInsert.Location = new System.Drawing.Point(252, 249);
+            this.btnInsert.Location = new System.Drawing.Point(415, 249);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(158, 23);
             this.btnInsert.TabIndex = 31;
@@ -146,7 +155,7 @@ namespace Proyek_PCS_2023
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(252, 307);
+            this.btnDelete.Location = new System.Drawing.Point(415, 307);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(158, 23);
             this.btnDelete.TabIndex = 32;
@@ -156,7 +165,7 @@ namespace Proyek_PCS_2023
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(252, 278);
+            this.btnUpdate.Location = new System.Drawing.Point(415, 278);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(158, 23);
             this.btnUpdate.TabIndex = 33;
@@ -166,7 +175,7 @@ namespace Proyek_PCS_2023
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(252, 336);
+            this.btnClear.Location = new System.Drawing.Point(415, 336);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(158, 23);
             this.btnClear.TabIndex = 34;
@@ -178,7 +187,7 @@ namespace Proyek_PCS_2023
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(583, 369);
+            this.ClientSize = new System.Drawing.Size(744, 369);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.btnDelete);

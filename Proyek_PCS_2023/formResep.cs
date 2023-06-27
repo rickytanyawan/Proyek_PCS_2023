@@ -98,6 +98,46 @@ namespace Proyek_PCS_2023
 
         int idx = -1;
 
+        private void numStock_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBahan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtNama_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             string nama;
@@ -158,8 +198,7 @@ namespace Proyek_PCS_2023
             string nama;
             int bahan;
             int stock;
-
-            nama = txtNama.Text;
+            int newId;
 
             nama = txtNama.Text.ToString();
             int id_fnb = GetFnbIdFromName(nama);
@@ -176,38 +215,48 @@ namespace Proyek_PCS_2023
 
             stock = (int)numStock.Value;
 
-            // Check if id_fnb and id_bahan already exist in resep table
-            string query = "SELECT COUNT(*) FROM resep WHERE ID_FNB = @id_fnb AND ID_BAHAN = @bahan";
-            DB.open();
-            using (MySqlCommand command = new MySqlCommand(query, connection))
+            if (id_fnb == -1)
             {
-                command.Parameters.AddWithValue("@id_fnb", id_fnb);
-                command.Parameters.AddWithValue("@bahan", bahan);
-                int count = Convert.ToInt32(command.ExecuteScalar());
-                if (count > 0)
+                MessageBox.Show("Makanan Atau Minuman Belum Terdaftar Tolong Daftarkan Terlebih Dahulu");
+                formFNB fnb = new formFNB();
+                fnb.Show();
+            }
+            else
+            {
+                // Check if id_fnb and id_bahan already exist in resep table
+                string query = "SELECT count(*) FROM resep WHERE ID_FNB = @id_fnb and id_bahan = @bahan";
+                DB.open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    MessageBox.Show("Bahan Sudah Ada Untuk Makanan Ini");
-                    return;
+                    command.Parameters.AddWithValue("@id_fnb", id_fnb);
+                    command.Parameters.AddWithValue("@bahan", bahan);
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        MessageBox.Show("Bahan Sudah Ada Untuk Makanan Ini");
+                        return;
+                    }
+
                 }
+                DB.close();
+
+                int nextId;
+
+                // Get the next available ID_RESEP using auto-increment
+                query = "SELECT MAX(ID_RESEP) FROM resep";
+                DB.open();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    object result = command.ExecuteScalar();
+                    nextId = result != null && result != DBNull.Value ? Convert.ToInt32(result) + 1 : 1;
+                }
+                DB.close();
+
+                DB.updateDB($"INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES ({nextId}, {id_fnb}, {bahan}, {stock})");
+
+                MessageBox.Show("Data inserted successfully");
+                bindDataSet();
             }
-            DB.close();
-
-            int nextId;
-
-            // Get the next available ID_RESEP using auto-increment
-            query = "SELECT MAX(ID_RESEP) FROM resep";
-            DB.open();
-            using (MySqlCommand command = new MySqlCommand(query, connection))
-            {
-                object result = command.ExecuteScalar();
-                nextId = result != null && result != DBNull.Value ? Convert.ToInt32(result) + 1 : 1;
-            }
-            DB.close();
-
-            DB.updateDB($"INSERT INTO resep (ID_RESEP, ID_FNB, ID_BAHAN, STOK) VALUES ({nextId}, {id_fnb}, {bahan}, {stock})");
-
-            MessageBox.Show("Data inserted successfully");
-            bindDataSet();
         }
     }
 }
