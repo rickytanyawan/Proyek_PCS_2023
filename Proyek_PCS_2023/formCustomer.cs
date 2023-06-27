@@ -220,6 +220,9 @@ namespace Proyek_PCS_2023
                 }
                 DB.close();
 
+                formNota f = new formNota(nomorNotaDTrans);
+                f.Show();
+
                 button5_Click(sender, e);
             }
             else
