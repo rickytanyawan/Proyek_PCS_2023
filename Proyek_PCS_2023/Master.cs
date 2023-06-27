@@ -51,5 +51,11 @@ namespace Proyek_PCS_2023
             formKitchen f = new formKitchen();
             f.ShowDialog();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            FormHistory f = new FormHistory();
+            f.ShowDialog();
+        }
     }
 }

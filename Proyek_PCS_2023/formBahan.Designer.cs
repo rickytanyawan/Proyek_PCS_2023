@@ -169,12 +169,12 @@ namespace Proyek_PCS_2023
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(531, 341);
+            this.button4.Location = new System.Drawing.Point(577, 341);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(121, 23);
+            this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 13;
-            this.button4.Text = "Back to Master";
+            this.button4.Text = "Back";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 

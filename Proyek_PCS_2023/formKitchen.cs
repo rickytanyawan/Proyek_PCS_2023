@@ -38,7 +38,7 @@ namespace Proyek_PCS_2023
         {
             if (dataGridView1.SelectedCells.Count > 0)
             {
-                int rowIndex = dataGridView1.SelectedCells[0].RowIndex;
+                int rowIndex = index;
                 DataGridViewRow row = dataGridView1.Rows[rowIndex];
                 string tempnonota = row.Cells["Nomor Nota"].Value.ToString();
 
@@ -57,25 +57,25 @@ namespace Proyek_PCS_2023
                             ReduceBahanStock(id_bahan);
                         }
 
-                        for (int i = 0; i < dataGridView1.RowCount; i++)
+                        for (int i = 0; i < dataKitchen.Rows.Count; i++)
                         {
-                            index++;
-                            row = dataGridView1.Rows[index];
+                            //index++;
+                            row = dataGridView1.Rows[i];
 
                             if (row.Cells["Nomor Nota"].Value.ToString() == tempnonota)
                             {
                                 // Update the status to "COOKING"
                                 row.Cells["Status"].Value = "COOKING";
                                 UpdateRowBackgroundColor(row);
+                                // Update the status in the h_trans table
+                                string nomorNotaHTrans = row.Cells["Nomor Nota"].Value.ToString();
+                                UpdateHTransStatus(nomorNotaHTrans, "COOKING");
                             }
-                            
+
                         }
 
                         
 
-                        // Update the status in the h_trans table
-                        string nomorNotaHTrans = row.Cells["Nomor Nota"].Value.ToString();
-                        UpdateHTransStatus(nomorNotaHTrans, "COOKING");
                     }
                     else
                     {
@@ -240,6 +240,17 @@ namespace Proyek_PCS_2023
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            index = e.RowIndex;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            formBahan b = new formBahan();
+            b.ShowDialog();
         }
     }
 }
