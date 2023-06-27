@@ -269,14 +269,7 @@ namespace Proyek_PCS_2023
 
             int status = 1;
 
-            MessageBox.Show(newID.ToString());
-            MessageBox.Show(nama);
-            MessageBox.Show(jenis);
-            MessageBox.Show(id_resep.ToString());
-            MessageBox.Show(harga.ToString());
-            MessageBox.Show(promo.ToString());
-            MessageBox.Show(paket.ToString());
-            MessageBox.Show(status.ToString());
+
 
             DB.updateDB($"INSERT INTO fnb (ID_FNB, NAMA_FNB, JENIS_FNB, ID_RESEP, HARGA, PROMO, PAKET, AVAILABLE) VALUES ({newID}, '{nama}', '{jenis}', {id_resep}, {harga}, {promo}, {paket}, {status})");
 
